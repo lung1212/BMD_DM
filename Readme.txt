@@ -2,6 +2,8 @@ Download the respective GWAS files
 eBMD: http://www.gefos.org/?q=content/data-release-2018
 T2DM: https://t2d.hugeamp.org/dinspector.html?dataset=Mahajan2022_T2D_EU
 2hGlu: https://magicinvestigators.org/downloads/
+LD file: https://mrcieu.github.io/ieugwasr/articles/local_ld.html
+
 
 
 Get significant and independent SNPs from Exposure, and retain only SNPs that we would use for DM and 2hGlu.
