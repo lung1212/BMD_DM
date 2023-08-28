@@ -62,7 +62,7 @@ exposure2<-read_exposure_data(filename = "eBMD_sig.txt",
 #find proxies, filter by R2 and Pvalue, then retain only those which are not palindromic.
 proxies<-data.frame()
 for(j in 1:nrow(prox_tot)){
-  x<-system(paste0("plink --bfile ./1KGP/EUR --r2 yes-really --ld-snp ",prox_tot$SNP[j]," --ld-window 99999 --ld-window-r2 0.8"))
+  x<-system(paste0("plink --bfile ../Protein/deCODE/1KGP/EUR --r2 yes-really --ld-snp ",prox_tot$SNP[j]," --ld-window 99999 --ld-window-r2 0.8"))
   y<-try(read.table("plink.ld"))
   if(is(y, 'try-error')) next
   system("rm plink.ld")
@@ -101,8 +101,27 @@ res3 <- phenoscanner(snpquery=dat_radial$SNP[301:400], pvalue = 5E-8, proxies = 
 res4 <- phenoscanner(snpquery=dat_radial$SNP[401:500], pvalue = 5E-8, proxies = "EUR", r2 = 0.8, build = 37)
 res5 <- phenoscanner(snpquery=dat_radial$SNP[501:nrow(dat_radial)], pvalue = 5E-8, proxies = "EUR", r2 = 0.8, build = 37)
 pheno<-rbind(res$results, res1$results, res2$results, res3$result, res4$results, res5$result)
-  
-#check for variations in trait names, identify terms that encompass only relevant traits
+
+#try to find any SNPs associated to osteocalcin:
+#res.e <- phenoscanner(snpquery=dat_radial$SNP[1:100], pvalue = 5E-8, proxies = "EUR", r2 = 0.8, build = 37, catalogue = "eQTL")
+#res1.e <- phenoscanner(snpquery=dat_radial$SNP[101:200], pvalue = 5E-8, proxies = "EUR", r2 = 0.8, build = 37, catalogue = "eQTL")
+#res2.e <- phenoscanner(snpquery=dat_radial$SNP[201:300], pvalue = 5E-8, proxies = "EUR", r2 = 0.8, build = 37, catalogue = "eQTL")
+#res3.e <- phenoscanner(snpquery=dat_radial$SNP[301:400], pvalue = 5E-8, proxies = "EUR", r2 = 0.8, build = 37, catalogue = "eQTL")
+#res4.e <- phenoscanner(snpquery=dat_radial$SNP[401:500], pvalue = 5E-8, proxies = "EUR", r2 = 0.8, build = 37, catalogue = "eQTL")
+#res5.e <- phenoscanner(snpquery=dat_radial$SNP[501:nrow(dat_radial)], pvalue = 5E-8, proxies = "EUR", r2 = 0.8, build = 37, catalogue = "eQTL")
+#pheno.e<-rbind(res.e$results, res1.e$results, res2.e$results, res3.e$result, res4.e$results, res5.e$result)
+#grep("BGLAP|OCN|OC|BGP", pheno.e$exp_gene)
+#res.p <- phenoscanner(snpquery=dat_radial$SNP[1:100], pvalue = 5E-8, proxies = "EUR", r2 = 0.8, build = 37, catalogue = "pQTL")
+#res1.p <- phenoscanner(snpquery=dat_radial$SNP[101:200], pvalue = 5E-8, proxies = "EUR", r2 = 0.8, build = 37, catalogue = "pQTL")
+#res2.p <- phenoscanner(snpquery=dat_radial$SNP[201:300], pvalue = 5E-8, proxies = "EUR", r2 = 0.8, build = 37, catalogue = "pQTL")
+#res3.p <- phenoscanner(snpquery=dat_radial$SNP[301:400], pvalue = 5E-8, proxies = "EUR", r2 = 0.8, build = 37, catalogue = "pQTL")
+#res4.p <- phenoscanner(snpquery=dat_radial$SNP[401:500], pvalue = 5E-8, proxies = "EUR", r2 = 0.8, build = 37, catalogue = "pQTL")
+#res5.p <- phenoscanner(snpquery=dat_radial$SNP[501:nrow(dat_radial)], pvalue = 5E-8, proxies = "EUR", r2 = 0.8, build = 37, catalogue = "pQTL")
+#pheno.p<-rbind(res.p$results, res1.p$results, res2.p$results, res3.p$result, res4.p$results, res5.p$results)
+#grep("osteocalcin", pheno.p$trait)
+#no osteocalcin
+
+#check for variations in trait names, identify terms that encompass only relevant traits. No traits related to insulin. 
 
 pheno<-subset(pheno, pheno$ancestry == "European" & as.numeric(pheno$p)<5e-8)
 pheno<-subset(pheno, grepl("ldl", trait, ignore.case=T) |
