@@ -10,7 +10,7 @@ Get significant and independent SNPs from Exposure, and retain only SNPs that we
 
 #eBMD
 
-->get sig SNPs with P.NI<5e-8
+->get significant SNPs with P.NI<5e-8
 awk 'NR==1 {print $0} NR>1 {if ($13 < 5e-8) print $0}' <(zcat eBMD.txt.gz ) > eBMD_sig.txt
 
 ->get independent SNPs, 10000Kb 0.001r2
